@@ -142,10 +142,10 @@ These are intentionally TBD until Ben supplies real info. Search for the
 - Hosted on **Vercel** via GitHub integration. Auto-deploys on push to `main`.
 - Project name on Vercel: `laymade`.
 - Sister projects (also auto-deployed from `neddez123/WebStealth`):
-  - `maison-elite`: root `Beauty/beauty-template/`
-  - `bloom-room`: root `Beauty/beauty-template-2/`
-- Once each template is deployed, set its production URL on the matching
-  template's `liveUrl` field in `app/data/templates.ts`.
+  - `maison-elite`: root `Beauty/beauty-template/` → `https://maison-elite-nine.vercel.app`
+  - `bloom-room`: root `Beauty/beauty-template-2/` → `https://bloom-room-gamma.vercel.app`
+- Both liveUrls are set in `app/data/templates.ts`. When adding future templates, deploy via
+  `vercel --yes --name <project-name>` from the template directory, then set the aliased URL.
 
 ## Local dev
 
