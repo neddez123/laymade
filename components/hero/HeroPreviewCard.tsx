@@ -1,136 +1,198 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import {
-  motion,
-  useMotionValue,
-  useSpring,
-  useTransform,
-} from "framer-motion";
+import { useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { featuredTemplates } from "@/app/data/templates";
 
-const CYCLE_MS = 6000;
+// Orbit keyframes reverse-engineered from tasteskill.dev DOM inspection.
+// x, y = % of card's own dimensions; z = px depth; s = scale; o = opacity
+const ORBIT = [
+  { t: 0.00, x: -60, y: -350, z: -1000, s: 0.44, o: 0.00 },
+  { t: 0.16, x: -60, y: -306, z:  -690, s: 0.62, o: 0.55 },
+  { t: 0.30, x: -60, y: -175, z:    63, s: 1.05, o: 0.90 },
+  { t: 0.42, x: -56, y:  -44, z:   273, s: 1.18, o: 1.00 },
+  { t: 0.55, x:  46, y:   20, z:    21, s: 1.03, o: 0.88 },
+  { t: 0.68, x: 177, y:   20, z:  -522, s: 0.72, o: 0.62 },
+  { t: 0.80, x: 270, y:   20, z: -1000, s: 0.44, o: 0.00 },
+  { t: 1.00, x: -60, y: -350, z: -1000, s: 0.44, o: 0.00 },
+];
+
+function lerp(a: number, b: number, u: number) {
+  return a + (b - a) * u;
+}
+
+function orbitAt(t: number) {
+  t = ((t % 1) + 1) % 1;
+  let k = ORBIT.length - 2;
+  for (let i = 0; i < ORBIT.length - 1; i++) {
+    if (t < ORBIT[i + 1].t) { k = i; break; }
+  }
+  const a = ORBIT[k], b = ORBIT[k + 1];
+  const u = (t - a.t) / (b.t - a.t);
+  return {
+    x: lerp(a.x, b.x, u),
+    y: lerp(a.y, b.y, u),
+    z: lerp(a.z, b.z, u),
+    s: lerp(a.s, b.s, u),
+    o: lerp(a.o, b.o, u),
+  };
+}
+
+// One full revolution ≈ 55 seconds
+const SPEED = 0.000018;
 
 export function HeroPreviewCard() {
-  const items = featuredTemplates();
-  const [index, setIndex] = useState(0);
-  const [hovering, setHovering] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+  const source = featuredTemplates();
 
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const springConfig = { stiffness: 140, damping: 18, mass: 0.6 };
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-4, 4]), springConfig);
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [3, -3]), springConfig);
-  const lift = useSpring(0, springConfig);
+  const padFactor = source.length > 0 ? Math.ceil(8 / source.length) : 1;
+  const cards = source.length > 0
+    ? Array.from({ length: padFactor }, () => source).flat()
+    : [];
+  const N = cards.length;
+
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const angleRef     = useRef(0);
+  const tiltX        = useRef(0);
+  const tiltY        = useRef(0);
+  const targetTiltX  = useRef(0);
+  const targetTiltY  = useRef(0);
+  const dragging     = useRef(false);
+  const dragX0       = useRef(0);
+  const angle0       = useRef(0);
+  const moved        = useRef(false);
+  const lastT        = useRef<number | null>(null);
 
   useEffect(() => {
-    if (items.length <= 1 || hovering) return;
-    const id = setInterval(() => {
-      setIndex((i) => (i + 1) % items.length);
-    }, CYCLE_MS);
-    return () => clearInterval(id);
-  }, [items.length, hovering]);
+    if (N === 0) return;
+    let raf: number;
 
-  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-    const rect = cardRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    mouseX.set(x);
-    mouseY.set(y);
+    function tick(now: number) {
+      const dt = lastT.current != null ? now - lastT.current : 16;
+      lastT.current = now;
+
+      // Only pause auto-rotation while actively dragging
+      if (!dragging.current) {
+        angleRef.current = ((angleRef.current - SPEED * dt) % 1 + 1) % 1;
+      }
+
+      // Smooth tilt toward mouse target
+      tiltX.current += (targetTiltX.current - tiltX.current) * 0.06;
+      tiltY.current += (targetTiltY.current - tiltY.current) * 0.06;
+      if (wrapRef.current) {
+        wrapRef.current.style.transform =
+          `rotateX(${tiltX.current}deg) rotateY(${tiltY.current}deg)`;
+      }
+
+      for (let i = 0; i < N; i++) {
+        const el = cardRefs.current[i];
+        if (!el) continue;
+        const p = orbitAt(angleRef.current + i / N);
+        el.style.transform =
+          `translate3d(calc(${p.x}%), calc(${p.y}%), ${p.z}px) scale(${p.s})`;
+        el.style.opacity       = String(p.o);
+        el.style.zIndex        = String(Math.round(50 + p.z / 25));
+        el.style.pointerEvents = p.o > 0.5 ? "auto" : "none";
+      }
+
+      raf = requestAnimationFrame(tick);
+    }
+
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [N]);
+
+  function onPointerDown(e: React.PointerEvent<HTMLDivElement>) {
+    dragging.current = true;
+    moved.current    = false;
+    dragX0.current   = e.clientX;
+    angle0.current   = angleRef.current;
+    lastT.current    = null;
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
   }
 
-  function handleMouseEnter() {
-    setHovering(true);
-    lift.set(-2);
+  function onPointerMove(e: React.PointerEvent<HTMLDivElement>) {
+    if (!dragging.current) return;
+    const dx = e.clientX - dragX0.current;
+    if (Math.abs(dx) > 5) moved.current = true;
+    const w = wrapRef.current?.clientWidth ?? 700;
+    angleRef.current = ((angle0.current + dx / w * 0.6) % 1 + 1) % 1;
   }
 
-  function handleMouseLeave() {
-    setHovering(false);
-    mouseX.set(0);
-    mouseY.set(0);
-    lift.set(0);
+  function onPointerUp() {
+    dragging.current = false;
+    lastT.current    = null;
   }
 
-  if (items.length === 0) return null;
-  const active = items[index];
+  function onMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    if (dragging.current) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const nx = (e.clientX - rect.left)  / rect.width  - 0.5;
+    const ny = (e.clientY - rect.top)   / rect.height - 0.5;
+    targetTiltX.current = ny * -6;
+    targetTiltY.current = nx *  8;
+  }
+
+  function onMouseLeave() {
+    targetTiltX.current = 0;
+    targetTiltY.current = 0;
+  }
+
+  if (cards.length === 0) return null;
 
   return (
-    <div className="flex flex-col items-center gap-6 w-full">
-      <Link
-        href={`/templates/${active.slug}`}
-        className="block w-full active:scale-[0.985] transition-transform duration-150 ease-out"
-        aria-label={`View ${active.name}`}
+    <div
+      className="relative w-full h-full"
+      style={{ perspective: "900px" }}
+    >
+      <div
+        ref={wrapRef}
+        className="absolute inset-0 cursor-grab active:cursor-grabbing select-none"
+        style={{ transformStyle: "preserve-3d" }}
+        onMouseLeave={onMouseLeave}
+        onMouseMove={onMouseMove}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
       >
-        <motion.div
-          ref={cardRef}
-          onMouseMove={handleMouseMove}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          style={{
-            rotateY,
-            rotateX,
-            y: lift,
-            transformPerspective: 1200,
-          }}
-          className="relative w-full aspect-[4/3] bg-[color:var(--paper)] border border-[color:var(--muted)]/40 overflow-hidden cursor-pointer shadow-[0_1px_2px_rgba(22,22,22,0.04)] will-change-transform"
-        >
-          {items.map((item, i) => (
-            <div
-              key={item.slug}
-              className="absolute inset-0 transition-opacity duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]"
-              style={{ opacity: i === index ? 1 : 0 }}
-              aria-hidden={i !== index}
-            >
+        {cards.map((item, i) => (
+          <div
+            key={`${item.slug}-${i}`}
+            ref={el => { cardRefs.current[i] = el; }}
+            className="absolute left-1/2 top-1/2 w-[48%] overflow-hidden rounded-[18px]"
+            style={{
+              willChange: "transform, opacity",
+              boxShadow: "0 22px 32px rgba(20,20,20,0.18)",
+            }}
+            onClick={() => {
+              if (!moved.current) router.push(`/templates/${item.slug}`);
+            }}
+          >
+            <div className="relative w-full" style={{ aspectRatio: "3/2" }}>
               <Image
                 src={item.heroScreenshot}
-                alt={`${item.name} hero`}
+                alt={item.name}
                 fill
-                priority={i === 0}
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover object-top"
+                sizes="(max-width: 768px) 80vw, 40vw"
+                className="object-cover object-top pointer-events-none"
+                draggable={false}
               />
             </div>
-          ))}
-
-          <div className="absolute bottom-0 left-0 right-0 px-5 py-4 bg-gradient-to-t from-black/65 via-black/25 to-transparent text-white flex items-end justify-between pointer-events-none">
-            <div>
-              <p className="font-[family-name:var(--font-serif)] text-xl leading-none">
-                {active.name}
+            <div className="absolute bottom-0 left-0 right-0 px-4 py-3 bg-gradient-to-t from-black/60 via-black/20 to-transparent text-white pointer-events-none">
+              <p className="font-[family-name:var(--font-serif)] text-sm leading-none">
+                {item.name}
               </p>
-              <p className="text-[10px] uppercase tracking-[0.14em] opacity-85 mt-1.5">
-                {active.vertical}
+              <p className="text-[9px] uppercase tracking-[0.14em] opacity-80 mt-1">
+                {item.vertical}
               </p>
             </div>
-            <span className="text-[10px] uppercase tracking-[0.14em] opacity-85">
-              Preview →
-            </span>
           </div>
-        </motion.div>
-      </Link>
-
-      {items.length > 1 && (
-        <div className="flex items-center gap-2" role="tablist" aria-label="Featured templates">
-          {items.map((t, i) => (
-            <button
-              key={t.slug}
-              type="button"
-              role="tab"
-              aria-selected={i === index}
-              aria-label={`Show ${t.name}`}
-              onClick={() => setIndex(i)}
-              className={`h-[3px] transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${
-                i === index
-                  ? "w-7 bg-[color:var(--accent)]"
-                  : "w-3 bg-[color:var(--muted)] hover:bg-[color:var(--ink-soft)]"
-              }`}
-            />
-          ))}
-        </div>
-      )}
+        ))}
+      </div>
     </div>
   );
 }
