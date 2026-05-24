@@ -58,6 +58,7 @@ The hero is a 3D orbital card carousel, NOT a Framer Motion carousel. Key facts:
 - **Speed**: `SPEED = 0.000018` rotations/ms ≈ 55 s per revolution.
 - **Card size**: `w-[48%]` of the orbit container, `rounded-[18px]`, aspect-ratio 3:2.
 - **Drag**: pointer events on the wrap div — `onPointerDown/Move/Up` + `setPointerCapture`. Rotation pauses only during drag (not hover).
+- **Pointer-events gotcha**: the text container in `Hero.tsx` must be `pointer-events-none` (with `pointer-events-auto` restored on the inner content div). Without this, the full-width transparent z-10 text wrapper silently swallows all drag events over the orbit, leaving only the far-right margin draggable.
 - **Mouse tilt**: `targetTiltX/Y` refs updated in `onMouseMove`, lerped toward in the RAF loop and applied to the wrap div's `transform`.
 - **Adding more templates**: just append to `app/data/templates.ts` with `featured: true`. The carousel pads to 8 slots automatically.
 
