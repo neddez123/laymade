@@ -8,8 +8,8 @@ export function Hero() {
     <section className="relative overflow-hidden bg-[color:var(--bg)]" style={{ minHeight: "700px" }}>
 
       {/* Text — constrained to max-width, with its own padding */}
-      <div className="relative z-10 mx-auto max-w-[1280px] px-6 md:px-12 pt-16 md:pt-28 pb-12 md:pb-32">
-        <div className="md:w-5/12 flex flex-col gap-8 md:gap-10">
+      <div className="relative z-10 pointer-events-none mx-auto max-w-[1280px] px-6 md:px-12 pt-16 md:pt-28 pb-12 md:pb-32">
+        <div className="pointer-events-auto md:w-5/12 flex flex-col gap-8 md:gap-10">
           <h1
             className="font-[family-name:var(--font-serif)] text-[color:var(--ink)] leading-[0.95] -tracking-[0.02em]"
             style={{ fontSize: "var(--fs-hero)" }}
