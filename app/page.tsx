@@ -2,6 +2,7 @@ import { Nav } from "@/components/nav/Nav";
 import { Hero } from "@/components/hero/Hero";
 import { TrustStrip } from "@/components/sections/TrustStrip";
 import { FeaturedTemplates } from "@/components/sections/FeaturedTemplates";
+import { WhyDesignMatters } from "@/components/sections/WhyDesignMatters";
 import { WhyLaymade } from "@/components/sections/WhyLaymade";
 import { Pricing } from "@/components/sections/Pricing";
 import { SocialProof } from "@/components/sections/SocialProof";
@@ -16,6 +17,7 @@ export default function HomePage() {
         <Hero />
         <TrustStrip />
         <FeaturedTemplates />
+        <WhyDesignMatters />
         <WhyLaymade />
         <Pricing />
         <SocialProof />
