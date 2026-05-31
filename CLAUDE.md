@@ -93,7 +93,15 @@ Routes:
 
 Components are grouped by responsibility under `components/`: `nav/`, `hero/`,
 `sections/`, `templates/`, `ui/`. Sections in `components/sections/` correspond
-1:1 to homepage scroll sections.
+1:1 to homepage scroll sections, in page order:
+
+1. `TrustStrip.tsx`
+2. `FeaturedTemplates.tsx`
+3. `WhyDesignMatters/index.tsx` — three alternating stat rows (0.05s · 94% · #1) with peer-reviewed citations. Lives in its own subfolder; `images/` holds future photo assets to replace the SVG placeholder.
+4. `WhyLaymade.tsx`
+5. `Pricing.tsx`
+6. `SocialProof.tsx`
+7. `Contact.tsx`
 
 ## Conventions
 
@@ -136,6 +144,9 @@ These are intentionally TBD until Ben supplies real info. Search for the
   "Quote on request". Real numbers go in once Ben decides strategy.
 - **Testimonials**: `components/sections/SocialProof.tsx` is a single muted
   placeholder card. Replace with real quotes when clients are onboarded.
+- **Why Design Matters images**: `components/sections/WhyDesignMatters/images/placeholder.svg`
+  is used for all three rows. Replace each `<ImagePlaceholder />` call with a real
+  `<Image>` pointing to `public/screenshots/` once photos are ready.
 
 ## Deployment
 
