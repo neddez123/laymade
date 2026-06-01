@@ -31,7 +31,7 @@ const rows = [
   },
   {
     stat: "#1",
-    headline: "Professional design is the biggest trust signal online",
+    headline: "Professional design is one of the biggest trust signals for your business online",
     body: "Stanford's Web Credibility Study of 1,481 people found that a professionally designed website ranked as a stronger trust signal than having a privacy policy, appearing at the top of Google, or being personally recommended. Design isn't cosmetic, it's the thing that makes people decide whether to trust you.",
     citation: {
       text: "Fogg et al. (2002) · Stanford Web Credibility Study, Stanford University",
