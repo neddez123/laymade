@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import placeholderSvg from "./images/placeholder.svg";
+import img005s from "./0.05s.png";
+import imgClutter from "./clutter.png";
+import imgCredibility from "./credibility.png";
 
 const rows = [
   {
@@ -12,6 +14,8 @@ const rows = [
       url: "https://www.tandfonline.com/doi/abs/10.1080/01449290500330448",
     },
     imageRight: true,
+    image: img005s,
+    imageAlt: "A website loaded in a split second, illustrating the 50ms judgment window",
   },
   {
     stat: "94%",
@@ -22,6 +26,8 @@ const rows = [
       url: "https://dl.acm.org/doi/10.1145/985692.985776",
     },
     imageRight: false,
+    image: imgClutter,
+    imageAlt: "A cluttered, hard-to-navigate website that drives visitors away",
   },
   {
     stat: "#1",
@@ -32,21 +38,10 @@ const rows = [
       url: "https://credibility.stanford.edu/pdf/Stanford-MakovskyWebCredStudy2002-prelim.pdf",
     },
     imageRight: true,
+    image: imgCredibility,
+    imageAlt: "A polished, professional website that builds immediate trust",
   },
-] as const;
-
-function ImagePlaceholder() {
-  return (
-    <div className="relative w-full overflow-hidden rounded-2xl" style={{ aspectRatio: "4/3", minHeight: "280px" }}>
-      <Image
-        src={placeholderSvg}
-        alt="Image placeholder"
-        fill
-        className="object-cover"
-      />
-    </div>
-  );
-}
+];
 
 export function WhyDesignMatters() {
   return (
@@ -107,7 +102,14 @@ export function WhyDesignMatters() {
 
               {/* Image */}
               <div className={!row.imageRight ? "md:order-first" : ""}>
-                <ImagePlaceholder />
+                <div className="relative w-full overflow-hidden rounded-2xl" style={{ aspectRatio: "4/3", minHeight: "280px" }}>
+                  <Image
+                    src={row.image}
+                    alt={row.imageAlt}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
               </div>
             </div>
           ))}
