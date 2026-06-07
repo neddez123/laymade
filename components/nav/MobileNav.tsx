@@ -49,6 +49,13 @@ export function MobileNav() {
             </div>
 
             <nav className="flex-1 overflow-y-auto px-6 py-8 flex flex-col gap-10">
+              <Link
+                href="/assess"
+                onClick={() => setOpen(false)}
+                className="font-[family-name:var(--font-serif)] text-3xl text-[color:var(--accent)] leading-tight"
+              >
+                Free audit
+              </Link>
               {verticals.map((v) => {
                 const items = templatesByVertical(v.id);
                 return (

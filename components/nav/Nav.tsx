@@ -26,6 +26,12 @@ export function Nav() {
         </nav>
 
         <div className="hidden md:flex items-center gap-6 text-[11px] uppercase tracking-[0.12em] text-[color:var(--ink-soft)]">
+          <Link
+            href="/assess"
+            className="text-[color:var(--accent)] font-semibold hover:opacity-70 transition-opacity"
+          >
+            Free audit
+          </Link>
           <a href="mailto:hello@laymade.co" className="hover:text-[color:var(--ink)] transition-colors">
             Email
           </a>

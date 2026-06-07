@@ -14,7 +14,7 @@ export interface Template {
 
 export const verticals: { id: Vertical; label: string; status: "live" | "coming-soon" }[] = [
   { id: "beauty",   label: "Beauty",   status: "live" },
-  { id: "trades",   label: "Trades",   status: "coming-soon" },
+  { id: "trades",   label: "Trades",   status: "live" },
   { id: "lettings", label: "Lettings", status: "coming-soon" },
 ];
 
@@ -36,6 +36,16 @@ export const templates: Template[] = [
     blurb: "Warm boutique salon site. Cream and terracotta, Cormorant on DM Sans, rounded.",
     heroScreenshot: "/screenshots/bloom-room-hero.jpg",
     liveUrl: "https://bloom-room-gamma.vercel.app",
+    featured: true,
+    status: "live",
+  },
+  {
+    slug: "city-bodyworks",
+    name: "City Bodyworks",
+    vertical: "trades",
+    blurb: "Dark industrial bodyshop site. Black and red, Space Grotesk, no-nonsense trades.",
+    heroScreenshot: "/screenshots/city-bodyworks-hero.jpg",
+    liveUrl: null,
     featured: true,
     status: "live",
   },
