@@ -45,7 +45,7 @@ export const templates: Template[] = [
     vertical: "trades",
     blurb: "Dark industrial bodyshop site. Black and red, Space Grotesk, no-nonsense trades.",
     heroScreenshot: "/screenshots/city-bodyworks-hero.jpg",
-    liveUrl: null,
+    liveUrl: "https://city-bodyworks.vercel.app",
     featured: true,
     status: "live",
   },
