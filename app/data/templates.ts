@@ -48,6 +48,16 @@ export const templates: Template[] = [
     featured: true,
     status: "live",
   },
+  {
+    slug: "local-plumber",
+    name: "Local Plumber",
+    vertical: "trades",
+    blurb: "Warm local plumbing site. Parchment and amber, Lora serif, Gas Safe trust signals.",
+    heroScreenshot: "/screenshots/local-plumber-hero.jpg",
+    liveUrl: "https://local-plumber-eight.vercel.app",
+    featured: true,
+    status: "live",
+  },
 ];
 
 export const featuredTemplates = (): Template[] =>
