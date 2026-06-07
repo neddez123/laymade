@@ -14,7 +14,7 @@ import {
 export const metadata: Metadata = {
   title: "All templates · Laymade",
   description:
-    "Production-ready website templates for beauty studios, trades, and lettings. Each one is yours to own.",
+    "Production-ready website templates for beauty studios and trades. Each one is yours to own.",
 };
 
 type SearchParams = Promise<{ vertical?: string }>;
@@ -63,8 +63,8 @@ export default async function TemplatesIndexPage({
             All templates
           </h1>
           <p className="text-lg text-[color:var(--ink-soft)] leading-relaxed">
-            Production-ready starting points for independent businesses across beauty,
-            trades, and lettings. Each one is yours to own.
+            Production-ready starting points for independent businesses across beauty
+            and trades. Each one is yours to own.
           </p>
         </div>
 

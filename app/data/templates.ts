@@ -1,4 +1,4 @@
-export type Vertical = "beauty" | "trades" | "lettings";
+export type Vertical = "beauty" | "trades";
 export type TemplateStatus = "live" | "coming-soon";
 
 export interface Template {
@@ -13,9 +13,8 @@ export interface Template {
 }
 
 export const verticals: { id: Vertical; label: string; status: "live" | "coming-soon" }[] = [
-  { id: "beauty",   label: "Beauty",   status: "live" },
-  { id: "trades",   label: "Trades",   status: "live" },
-  { id: "lettings", label: "Lettings", status: "coming-soon" },
+  { id: "beauty", label: "Beauty", status: "live" },
+  { id: "trades", label: "Trades", status: "live" },
 ];
 
 export const templates: Template[] = [

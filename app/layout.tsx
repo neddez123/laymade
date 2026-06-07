@@ -19,7 +19,7 @@ const geist = Geist({
 export const metadata: Metadata = {
   title: "Laymade · Premium websites for independent businesses",
   description:
-    "Bespoke websites for British independents. Hand-built for beauty studios, trades, and lettings. Built fast, and yours from day one.",
+    "Bespoke websites for British independents. Hand-built for beauty studios and trades. Built fast, and yours from day one.",
   metadataBase: new URL("https://laymade.vercel.app"),
   openGraph: {
     title: "Laymade · Premium websites for independent businesses",
