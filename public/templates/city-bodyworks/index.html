@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="City Bodyworks — Car body repair specialists. Accident repair, paint, panel beating, alloys, MOT prep, welding, SMART repairs. Insurance approved.">
+  <title>City Bodyworks — Independent Car Bodyshop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&family=Space+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0E0E0E;
+      --surface: #161616;
+      --text: #F0EDE8;
+      --accent: #E63D2F;
+      --muted: #3A3A3A;
+      --font-main: 'Space Grotesk', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+      --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-main);
+      font-size: 1rem;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    /* Reveal animation base state */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* NAV */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid transparent;
+      transition: background 0.3s ease, border-bottom-color 0.3s ease;
+    }
+    .nav.scrolled {
+      background: var(--surface);
+      border-bottom-color: var(--accent);
+    }
+    .nav__brand {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      color: var(--text);
+    }
+    .nav__links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav__links a {
+      font-size: 0.875rem;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .nav__links a:hover { opacity: 1; }
+    .nav__phone {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      padding: 0.75rem 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .nav__links { display: none; }
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent calc(25% - 1px),
+        var(--muted) calc(25% - 1px),
+        var(--muted) 25%
+      );
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .hero__image {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+    }
+    .hero__image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to left, color-mix(in oklch, var(--bg) 10%, transparent) 40%, var(--bg) 100%);
+      pointer-events: none;
+    }
+    .hero__inner {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 7rem 1.5rem 4rem;
+      position: relative;
+      z-index: 2;
+    }
+    .hero__label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+    }
+    .hero__title {
+      font-size: clamp(5rem, 18vw, 11rem);
+      font-weight: 900;
+      line-height: 0.88;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .hero__title-line {
+      display: block;
+      overflow: hidden;
+      padding-bottom: 0.06em;
+    }
+    .hero__title-inner {
+      display: block;
+      transform: translateY(-110%);
+      animation: stampDown 0.7s var(--ease-expo) both;
+    }
+    .hero__title-line:nth-child(1) .hero__title-inner { animation-delay: 0.15s; }
+    .hero__title-line:nth-child(2) .hero__title-inner { animation-delay: 0.23s; }
+    .hero__title-line:nth-child(3) .hero__title-inner { animation-delay: 0.31s; }
+    .hero__sub {
+      margin-top: 2rem;
+      font-size: 1rem;
+      color: var(--text);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
+      max-width: 30ch;
+    }
+    .hero__cta {
+      display: inline-block;
+      margin-top: 2.5rem;
+      padding: 0.9rem 2rem;
+      border: 1px solid var(--text);
+      font-size: 0.875rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+      transition: transform 100ms ease-out, border-color 0.2s ease;
+    }
+    .hero__cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: -1;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .hero__cta:hover::before { transform: scaleX(1); }
+      .hero__cta:hover { border-color: var(--accent); }
+    }
+    .hero__cta:active { transform: scale(0.97); }
+
+    .hero__scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      right: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .hero__scroll-line {
+      display: block;
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes stampDown {
+      from { transform: translateY(-110%); }
+      to { transform: translateY(0); }
+    }
+    @keyframes numTick {
+      from { transform: translateY(-6px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    @media (max-width: 767px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero__image { display: none; }
+      .hero__inner { min-height: 100svh; }
+    }
+    @media (min-width: 768px) {
+      .hero__inner { padding: 7rem 4rem 5rem; }
+    }
+
+    /* SERVICES */
+    .services {
+      background: var(--surface);
+      padding: 6rem 1.5rem;
+    }
+    .services__inner { max-width: 900px; margin: 0 auto; }
+    .services__heading {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin-bottom: 3rem;
+      color: var(--text);
+    }
+    .services__list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+    }
+    .service {
+      display: grid;
+      grid-template-columns: 3rem 1fr;
+      gap: 1rem 1.5rem;
+      padding: 1.75rem 0;
+      border-top: 1px solid var(--muted);
+    }
+    .service:last-child { border-bottom: 1px solid var(--muted); }
+    .service.visible .service__num {
+      animation: numTick 0.35s var(--ease-expo) both;
+    }
+    .service__num {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      padding-top: 0.3rem;
+      letter-spacing: 0.05em;
+    }
+    .service__name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.35rem;
+    }
+    .service__desc {
+      font-size: 0.9375rem;
+      color: var(--text);
+      opacity: 0.65;
+      max-width: 55ch;
+    }
+
+    @media (min-width: 768px) {
+      .services { padding: 8rem 4rem; }
+      .service { grid-template-columns: 4rem 1fr; }
+    }
+
+    /* ABOUT */
+    .about {
+      padding: 6rem 1.5rem;
+      background: var(--bg);
+    }
+    .about__inner { max-width: 900px; margin: 0 auto; }
+    .about__stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--muted);
+      border: 1px solid var(--muted);
+      margin-bottom: 4rem;
+    }
+    .about__stat {
+      background: var(--bg);
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .about__stat-num {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: var(--accent);
+    }
+    .about__stat-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      opacity: 0.6;
+    }
+    .about__text p {
+      font-size: 1.0625rem;
+      line-height: 1.8;
+      max-width: 60ch;
+      opacity: 0.85;
+    }
+
+    @media (max-width: 600px) {
+      .about__stats { grid-template-columns: 1fr; }
+      .about { padding: 5rem 1.5rem; }
+    }
+    @media (min-width: 768px) {
+      .about { padding: 8rem 4rem; }
+    }
+
+    /* CONTACT */
+    .contact {
+      background: var(--surface);
+      padding: 6rem 1.5rem;
+    }
+    .contact__inner { max-width: 700px; margin: 0 auto; }
+    .contact__heading {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .contact__sub {
+      opacity: 0.65;
+      margin-bottom: 3rem;
+      max-width: 50ch;
+    }
+    .contact__form { display: flex; flex-direction: column; gap: 1.5rem; }
+    .field { display: flex; flex-direction: column; gap: 0.4rem; }
+    .field__label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.5;
+    }
+    .field__input {
+      background: var(--bg);
+      border: 1px solid var(--muted);
+      color: var(--text);
+      font-family: var(--font-main);
+      font-size: 1rem;
+      padding: 0.85rem 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+    .field__input:focus { border-color: var(--accent); }
+    .field__input--textarea { resize: vertical; min-height: 120px; }
+    .field__input::placeholder { color: var(--text); opacity: 0.25; }
+    .contact__submit {
+      align-self: flex-start;
+      background: var(--accent);
+      color: var(--text);
+      border: none;
+      padding: 0.9rem 2.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: opacity 0.2s, transform 100ms ease-out;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .contact__submit:hover { opacity: 0.85; }
+    }
+    .contact__submit:active { transform: scale(0.98); opacity: 0.75; }
+    .contact__address {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--muted);
+    }
+    .contact__address-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .contact__address address {
+      font-style: normal;
+      opacity: 0.7;
+      line-height: 1.9;
+    }
+    .contact__address a { color: var(--accent); }
+
+    @media (min-width: 768px) {
+      .contact { padding: 8rem 4rem; }
+    }
+
+    /* FOOTER */
+    .footer {
+      background: var(--bg);
+      border-top: 1px solid var(--muted);
+      padding: 2rem 1.5rem;
+    }
+    .footer__inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .footer__brand {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+    }
+    .footer__detail {
+      font-size: 0.8rem;
+      opacity: 0.4;
+      font-family: var(--font-mono);
+    }
+
+    @media (min-width: 768px) {
+      .footer { padding: 2rem 4rem; }
+      .footer__inner { flex-direction: row; justify-content: space-between; align-items: center; }
+    }
+
+    /* PHOTOS */
+    .photos {
+      background: var(--bg);
+      padding: 6rem 1.5rem;
+    }
+    .photos__inner { max-width: 900px; margin: 0 auto; }
+    .photos__heading {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+    }
+    .photos__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+    .photo {
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--muted);
+      contain: layout style;
+    }
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .photo img { transition: transform 200ms var(--ease-expo); }
+      .photo:hover img { transform: scale(1.04); }
+    }
+    .photo.reveal { transform: translateY(20px) scale(0.96); }
+    .photo.reveal.visible { transform: translateY(0) scale(1); }
+    .photo--wide { grid-column: span 2; }
+
+    @media (min-width: 768px) {
+      .photos { padding: 8rem 4rem; }
+      .photos__grid { grid-template-columns: repeat(3, 1fr); }
+      .photo--wide { grid-column: span 1; }
+    }
+
+    /* REVIEWS */
+    .reviews {
+      background: var(--surface);
+      padding: 6rem 1.5rem;
+    }
+    .reviews__inner { max-width: 900px; margin: 0 auto; }
+    .reviews__header {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    .reviews__heading {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+    .reviews__meta {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .reviews__score {
+      font-size: clamp(3rem, 8vw, 5rem);
+      font-weight: 900;
+      line-height: 1;
+      color: var(--accent);
+      letter-spacing: -0.04em;
+    }
+    .reviews__detail {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .reviews__stars {
+      color: var(--accent);
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+    }
+    .reviews__count {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.5;
+    }
+    .reviews__grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .review {
+      padding: 2rem 0;
+      border-top: 1px solid var(--muted);
+    }
+    .review:last-of-type { border-bottom: 1px solid var(--muted); }
+    .review__stars {
+      color: var(--accent);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.75rem;
+    }
+    .review__text {
+      font-size: 1rem;
+      line-height: 1.75;
+      opacity: 0.85;
+      max-width: 65ch;
+      margin-bottom: 1rem;
+    }
+    .review__author {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.45;
+    }
+    .reviews__cta {
+      display: inline-block;
+      margin-top: 1.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border-bottom: 1px solid var(--accent);
+      padding: 0.65rem 0 0.2rem;
+      transition: opacity 0.2s;
+    }
+    .reviews__cta:hover { opacity: 0.7; }
+
+    @media (min-width: 768px) {
+      .reviews { padding: 8rem 4rem; }
+      .reviews__grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0 3rem;
+      }
+      .review { border-bottom: none; }
+      .review:last-of-type { border-bottom: none; }
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .skip-nav {
+      position: absolute;
+      top: -100%;
+      left: 1.5rem;
+      padding: 0.75rem 1.25rem;
+      background: var(--accent);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      z-index: 200;
+      transition: top 0.2s ease;
+    }
+    .skip-nav:focus { top: 1.5rem; }
+
+    @media (prefers-reduced-motion: no-preference) {
+      html { scroll-behavior: smooth; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero__label,
+      .hero__title-inner,
+      .hero__sub,
+      .hero__cta,
+      .hero__scroll-line,
+      .reveal,
+      .reveal.visible {
+        animation: none !important;
+        transition: opacity 0.2s ease !important;
+        transform: none !important;
+        opacity: 1 !important;
+      }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#hero" class="skip-nav">Skip to content</a>
+  <nav class="nav" id="nav" aria-label="Main navigation">
+    <a href="#" class="nav__brand">CITY BODYWORKS</a>
+    <ul class="nav__links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="tel:+447700900000" class="nav__phone">Call us</a>
+  </nav>
+  <main>
+  <section class="hero" id="hero">
+    <div class="hero__inner">
+      <p class="hero__label">Independent · Est. 2003</p>
+      <h1 class="hero__title">
+        <span class="hero__title-line"><span class="hero__title-inner">City</span></span>
+        <span class="hero__title-line"><span class="hero__title-inner">Body</span></span>
+        <span class="hero__title-line"><span class="hero__title-inner">works</span></span>
+      </h1>
+      <p class="hero__sub">Car bodywork specialists.<br>Insurance approved. Locally owned.</p>
+      <a href="#contact" class="hero__cta">Get a quote</a>
+    </div>
+    <div class="hero__image">
+      <!-- Convert PNG to WebP for ~70% size reduction: cwebp -q 85 Images/car-hero.png -o Images/car-hero.webp -->
+      <picture>
+        <source srcset="Images/car-hero.webp" type="image/webp">
+        <img src="Images/car-hero.png" alt=""
+             width="1280" height="832"
+             fetchpriority="high"
+             decoding="async">
+      </picture>
+    </div>
+    <div class="hero__scroll-hint" aria-hidden="true">
+      <span class="hero__scroll-line"></span>
+    </div>
+  </section>
+  <section class="services" id="services">
+    <div class="services__inner">
+      <h2 class="services__heading reveal">What we do</h2>
+      <ol class="services__list">
+        <li class="service reveal">
+          <span class="service__num">01</span>
+          <div class="service__body">
+            <h3 class="service__name">Accident Repair</h3>
+            <p class="service__desc">From minor bumps to serious structural damage. We work directly with all major insurers.</p>
+          </div>
+        </li>
+        <li class="service reveal">
+          <span class="service__num">02</span>
+          <div class="service__body">
+            <h3 class="service__name">Paint Respray</h3>
+            <p class="service__desc">Full resprays and panel-by-panel colour matching. Cellulose, basecoat/clearcoat, matte.</p>
+          </div>
+        </li>
+        <li class="service reveal">
+          <span class="service__num">03</span>
+          <div class="service__body">
+            <h3 class="service__name">Panel Beating</h3>
+            <p class="service__desc">Dents pulled and panels reshaped by hand before any filler or paint touches the car.</p>
+          </div>
+        </li>
+        <li class="service reveal">
+          <span class="service__num">04</span>
+          <div class="service__body">
+            <h3 class="service__name">Alloy Refurbishment</h3>
+            <p class="service__desc">Kerbed, corroded, or cracked alloys stripped and powder-coated or diamond-cut.</p>
+          </div>
+        </li>
+        <li class="service reveal">
+          <span class="service__num">05</span>
+          <div class="service__body">
+            <h3 class="service__name">MOT Preparation</h3>
+            <p class="service__desc">We find what'll fail before the test does. Bodywork, lights, structural checks.</p>
+          </div>
+        </li>
+        <li class="service reveal">
+          <span class="service__num">06</span>
+          <div class="service__body">
+            <h3 class="service__name">Welding</h3>
+            <p class="service__desc">MIG and TIG. Sill repairs, chassis work, custom fabrication. Tested and certified.</p>
+          </div>
+        </li>
+        <li class="service reveal">
+          <span class="service__num">07</span>
+          <div class="service__body">
+            <h3 class="service__name">SMART Repairs</h3>
+            <p class="service__desc">Small to Medium Area Repair Technology. Scratches, chips, and scuffs fixed without a full respray.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+  <section class="about" id="about">
+    <div class="about__inner">
+      <h2 class="visually-hidden">About City Bodyworks</h2>
+      <div class="about__stats">
+        <div class="about__stat reveal">
+          <span class="about__stat-num">20+</span>
+          <span class="about__stat-label">Years trading</span>
+        </div>
+        <div class="about__stat reveal">
+          <span class="about__stat-num">All</span>
+          <span class="about__stat-label">Major insurers accepted</span>
+        </div>
+        <div class="about__stat reveal">
+          <span class="about__stat-num">Indie</span>
+          <span class="about__stat-label">Independent, family run</span>
+        </div>
+      </div>
+      <div class="about__text reveal">
+        <p>We've been repairing cars locally for over two decades. No franchise, no middlemen: you deal with the people doing the work. We tell you what the job involves, what it costs, and how long it takes. If it's not fixable, we'll tell you that too.</p>
+      </div>
+    </div>
+  </section>
+  <section class="photos" id="photos">
+    <div class="photos__inner">
+      <h2 class="photos__heading reveal">The work</h2>
+      <div class="photos__grid">
+        <div class="photo reveal"><img src="https://images.unsplash.com/photo-1591278169757-deac26e49555?auto=format&fit=crop&w=800&q=80" alt="Car restoration workshop" loading="lazy" decoding="async"></div>
+        <div class="photo reveal"><img src="https://images.unsplash.com/photo-1727893304219-063d142ce6f3?auto=format&fit=crop&w=800&q=80" alt="Car in for repair" loading="lazy" decoding="async"></div>
+        <div class="photo reveal"><img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=800&q=80" alt="Spray and paint work" loading="lazy" decoding="async"></div>
+        <div class="photo reveal"><img src="https://images.unsplash.com/photo-1727893119356-1702fe921cf9?auto=format&fit=crop&w=800&q=80" alt="Car at the garage" loading="lazy" decoding="async"></div>
+        <div class="photo reveal"><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80" alt="Finished repair" loading="lazy" decoding="async"></div>
+        <div class="photo reveal"><img src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=800&q=80" alt="Workshop floor" loading="lazy" decoding="async"></div>
+      </div>
+    </div>
+  </section>
+  <section class="reviews" id="reviews">
+    <div class="reviews__inner">
+      <div class="reviews__header reveal">
+        <h2 class="reviews__heading">What customers say</h2>
+        <div class="reviews__meta">
+          <span class="reviews__score" aria-hidden="true">4.8</span>
+          <div class="reviews__detail">
+            <span class="reviews__stars" aria-hidden="true">★★★★★</span>
+            <span class="visually-hidden">4.8 out of 5 stars.</span>
+            <span class="reviews__count">112 reviews on Google</span>
+          </div>
+        </div>
+      </div>
+      <div class="reviews__grid">
+        <article class="review reveal">
+          <p class="review__stars" aria-hidden="true">★★★★★</p>
+          <span class="visually-hidden">5 out of 5 stars.</span>
+          <p class="review__text">"Amazing work on my car — passenger door dented and deep scratches, wheel arch scraped, door handle chipped. Can't even tell the damage was there. Absolutely flawless finish."</p>
+          <p class="review__author">Sarah M., Google review, 4 months ago</p>
+        </article>
+        <article class="review reveal">
+          <p class="review__stars" aria-hidden="true">★★★★★</p>
+          <span class="visually-hidden">5 out of 5 stars.</span>
+          <p class="review__text">"Took my car in after damaging the doors. Professional service from start to finish — kept me updated throughout and went above and beyond. Couldn't recommend more highly."</p>
+          <p class="review__author">James T., Google review, 3 months ago</p>
+        </article>
+        <article class="review reveal">
+          <p class="review__stars" aria-hidden="true">★★★★★</p>
+          <span class="visually-hidden">5 out of 5 stars.</span>
+          <p class="review__text">"After a minor accident I brought my car in for repairs and the results were flawless. The team was professional, efficient, and kept me updated throughout. My car looks as good as new."</p>
+          <p class="review__author">Priya K., Google review, 5 months ago</p>
+        </article>
+      </div>
+      <a href="#" class="reviews__cta reveal">Read all 112 reviews on Google &rarr;</a>
+    </div>
+  </section>
+  <section class="contact" id="contact">
+    <div class="contact__inner">
+      <h2 class="contact__heading reveal">Get in touch</h2>
+      <p class="contact__sub reveal">Tell us about the car and what's happened. We'll come back to you with a quote.</p>
+      <form class="contact__form reveal" action="mailto:hello@example.com" method="post" enctype="text/plain">
+        <div class="field">
+          <label class="field__label" for="name">Your name</label>
+          <input class="field__input" type="text" id="name" name="name" required autocomplete="name">
+        </div>
+        <div class="field">
+          <label class="field__label" for="phone">Phone number</label>
+          <input class="field__input" type="tel" id="phone" name="phone" required autocomplete="tel">
+        </div>
+        <div class="field">
+          <label class="field__label" for="job">Describe the job</label>
+          <textarea class="field__input field__input--textarea" id="job" name="job" rows="5" required placeholder="Make, model, what happened, what you need."></textarea>
+        </div>
+        <button class="contact__submit" type="submit">Send enquiry</button>
+      </form>
+      <div class="contact__address reveal">
+        <p class="contact__address-label">Find us</p>
+        <address>
+          12 Example Street<br>
+          Your Town<br>
+          London E1 1AA<br>
+          <a href="tel:+447700900000">07700 900000</a>
+        </address>
+      </div>
+    </div>
+  </section>
+  </main>
+  <footer class="footer">
+    <div class="footer__inner">
+      <span class="footer__brand">CITY BODYWORKS</span>
+      <span class="footer__detail">Your Town, London. Mon–Fri 8am–6pm, Sat 9am–2pm</span>
+    </div>
+  </footer>
+  <script>
+    // Promote hero title lines for GPU compositing, release after animation completes
+    document.querySelectorAll('.hero__title-inner').forEach(el => {
+      el.style.willChange = 'transform';
+    });
+    setTimeout(() => {
+      document.querySelectorAll('.hero__title-inner').forEach(el => {
+        el.style.willChange = 'auto';
+      });
+    }, 1500);
+
+    // Nav scroll state
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // Staggered reveal for service and photo items
+    document.querySelectorAll('.service.reveal').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 60}ms`;
+      const num = el.querySelector('.service__num');
+      if (num) num.style.animationDelay = `${i * 60 + 180}ms`;
+    });
+    document.querySelectorAll('.photo.reveal').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 80}ms`;
+    });
+    document.querySelectorAll('.review.reveal').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 60}ms`;
+    });
+
+    // IntersectionObserver for all .reveal elements
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px 60px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

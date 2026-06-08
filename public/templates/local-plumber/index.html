@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Template structure inspired by reference research. All content is fictional placeholder data. -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>City Plumbing &amp; Heating — London</title>
+  <meta name="description" content="Trusted local plumber in London. Boiler repairs, installations, servicing and emergency call-outs. Gas Safe registered. Call 07700 900000.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* ===== TOKENS ===== */
+    :root {
+      --parchment:       #F5F0E8;
+      --canvas:          #FFFDF9;
+      --ember:           #C96A2A;
+      --ember-dark:      #A85520;
+      --ember-deeper:    #8C4518;
+      --slate:           #1C1612;
+      --stone:           #6B5E52;
+      --dust:            #E0D8CF;
+
+      --color-on-action: #FFFDF9;
+
+      --font-serif: 'Lora', Georgia, serif;
+      --font-sans:  'DM Sans', system-ui, sans-serif;
+
+      --radius-btn: 6px;
+      --radius-sm:  4px;
+      --radius-img: 8px;
+
+      --space-xs:      0.5rem;
+      --space-sm:      1rem;
+      --space-md:      1.5rem;
+      --space-lg:      3rem;
+      --space-xl:      5rem;
+      --space-section: 6rem;
+
+      --max-width: 1200px;
+    }
+
+    /* ===== RESET ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--slate);
+      background: var(--parchment);
+      padding-top: 4rem;
+    }
+    img  { display: block; max-width: 100%; height: auto; }
+    a    { color: inherit; text-decoration: none; }
+    ul   { list-style: none; }
+    section[id] { scroll-margin-top: 5rem; }
+
+    /* ===== FOCUS ===== */
+    :focus-visible {
+      outline: 2px solid var(--ember-dark);
+      outline-offset: 3px;
+      border-radius: var(--radius-sm);
+    }
+    :focus:not(:focus-visible) { outline: none; }
+
+    /* ===== SKIP LINK ===== */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: var(--space-sm);
+      z-index: 200;
+      padding: 0.5rem 1rem;
+      background: var(--ember-dark);
+      color: var(--color-on-action);
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      transition: top 0.2s ease;
+      text-decoration: none;
+    }
+    .skip-link:focus { top: var(--space-sm); }
+
+    /* ===== UTILITIES ===== */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+    .section-label {
+      font-family: var(--font-sans);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone);
+      margin-bottom: var(--space-sm);
+    }
+    .section-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: var(--slate);
+      line-height: 1.2;
+      margin-bottom: var(--space-md);
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.75rem;
+      border-radius: var(--radius-btn);
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 160ms ease-out;
+      text-decoration: none;
+      border: 2px solid transparent;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn--filled {
+      background: var(--ember-dark);
+      color: var(--color-on-action);
+      border-color: var(--ember-dark);
+      font-size: 1.05rem;
+    }
+    .btn--filled:hover {
+      background: var(--ember-deeper);
+      border-color: var(--ember-deeper);
+    }
+    .btn--outline {
+      background: transparent;
+      color: var(--ember-dark);
+      border-color: var(--ember-dark);
+      font-size: 0.95rem;
+    }
+    .btn--outline:hover {
+      background: var(--ember-dark);
+      color: var(--color-on-action);
+    }
+    .text-link {
+      color: var(--ember-dark);
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .text-link:hover { color: var(--ember-deeper); }
+
+    /* ===== NAV ===== */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: transparent;
+      border-bottom: 1px solid transparent;
+      transition: background 0.3s cubic-bezier(0.23, 1, 0.32, 1), border-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .nav.scrolled {
+      background: var(--canvas);
+      border-bottom-color: var(--dust);
+    }
+    .nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 4rem;
+    }
+    .nav__brand {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--slate);
+    }
+    .nav__actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .nav__whatsapp {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--stone);
+      transition: color 0.2s;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .nav__whatsapp:hover { color: var(--ember-dark); }
+    .nav__phone {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--ember-dark);
+      transition: color 0.2s;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .nav__phone:hover { color: var(--ember-deeper); }
+    .nav__badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--stone);
+      border: 1px solid var(--dust);
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-sm);
+    }
+    @media (max-width: 600px) {
+      .nav__whatsapp,
+      .nav__badge { display: none; }
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: var(--canvas);
+      padding-top: var(--space-xl);
+      padding-bottom: var(--space-xl);
+    }
+    .hero__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+      align-items: center;
+    }
+    .hero__headline {
+      font-family: var(--font-serif);
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      color: var(--slate);
+      line-height: 1.1;
+      margin-bottom: var(--space-md);
+    }
+    .hero__subhead {
+      font-size: 1.1rem;
+      color: var(--stone);
+      max-width: 48ch;
+      line-height: 1.7;
+      margin-bottom: var(--space-md);
+      overflow-wrap: break-word;
+    }
+    .hero__ctas {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-sm);
+    }
+    .hero__hours {
+      font-size: 0.8rem;
+      color: var(--stone);
+      line-height: 1.5;
+      letter-spacing: 0.01em;
+    }
+    .hero__image-wrap { display: flex; justify-content: center; }
+    .hero__image {
+      width: 100%;
+      max-width: 480px;
+      height: auto;
+      aspect-ratio: 7 / 8;
+      object-fit: cover;
+      border-radius: var(--radius-img);
+      background: linear-gradient(135deg, var(--dust) 0%, var(--parchment) 100%);
+    }
+    @media (max-width: 768px) {
+      .hero__inner { grid-template-columns: 1fr; }
+      .hero__image-wrap { order: -1; }
+      .hero__image { max-width: 100%; aspect-ratio: 16 / 9; }
+    }
+    @media (max-width: 480px) {
+      .hero__ctas { flex-direction: column; }
+      .btn { width: 100%; justify-content: center; }
+    }
+
+    /* ===== TRUST BAR ===== */
+    .trust {
+      background: var(--parchment);
+      border-top: 1px solid var(--dust);
+      border-bottom: 1px solid var(--dust);
+      padding: var(--space-lg) 0;
+    }
+    .trust__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--dust);
+    }
+    .trust__item {
+      background: var(--parchment);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: var(--space-lg) var(--space-md);
+      gap: var(--space-xs);
+    }
+    .trust__stat {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      font-weight: 700;
+      color: var(--ember);
+      line-height: 1;
+    }
+    .trust__label {
+      font-family: var(--font-sans);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    @media (max-width: 600px) {
+      .trust__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ===== EMERGENCY BAND ===== */
+    .emergency-band {
+      background: var(--parchment);
+      border-bottom: 1px solid var(--dust);
+      padding: 0.75rem 0;
+      text-align: center;
+    }
+    .emergency-band__text {
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--ember-dark);
+    }
+    .emergency-band__text a {
+      color: var(--ember-dark);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: color 0.2s;
+    }
+    .emergency-band__text a:hover { color: var(--ember-deeper); }
+
+    /* ===== ABOUT ===== */
+    .about {
+      background: var(--canvas);
+      padding: var(--space-section) 0;
+    }
+    .about__inner {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: var(--space-xl);
+      align-items: center;
+    }
+    .about__body {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--slate);
+      max-width: 60ch;
+      margin-bottom: var(--space-md);
+    }
+    .about__creds {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+    }
+    .about__cred-chip {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--ember-dark);
+      background: var(--parchment);
+      border: 1px solid var(--ember-dark);
+      padding: 0.3rem 0.8rem;
+      border-radius: var(--radius-sm);
+      letter-spacing: 0.03em;
+    }
+    .about__photo {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      border-radius: var(--radius-img);
+      background: linear-gradient(135deg, var(--dust) 0%, var(--parchment) 100%);
+    }
+    @media (max-width: 900px) {
+      .about__inner { grid-template-columns: 1fr; }
+      .about__photo { aspect-ratio: 16 / 9; max-width: 100%; }
+    }
+
+    /* ===== SERVICES ===== */
+    .services {
+      background: var(--parchment);
+      padding: var(--space-section) 0;
+      border-top: 1px solid var(--dust);
+      content-visibility: auto;
+      contain-intrinsic-size: auto 700px;
+    }
+    .services__list {
+      margin-top: var(--space-lg);
+      border-top: 1px solid var(--dust);
+    }
+    .services__row {
+      display: grid;
+      grid-template-columns: 3rem 1fr;
+      gap: var(--space-md);
+      align-items: start;
+      padding: var(--space-md) 0;
+      border-bottom: 1px solid var(--dust);
+      transition: background 0.2s ease;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .services__row:hover { background: rgba(201, 106, 42, 0.04); }
+    }
+    .services__num {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--ember);
+      line-height: 1.6;
+      padding-top: 0.1rem;
+    }
+    .services__name {
+      display: block;
+      font-family: var(--font-sans);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--slate);
+      margin-bottom: 0.25rem;
+    }
+    .services__desc {
+      font-size: 0.95rem;
+      color: var(--stone);
+      line-height: 1.6;
+    }
+    .services__cta-line {
+      margin-top: var(--space-lg);
+      font-size: 1rem;
+      color: var(--stone);
+    }
+
+    /* ===== REVIEWS ===== */
+    .reviews {
+      background: var(--canvas);
+      padding: var(--space-section) 0;
+      border-top: 1px solid var(--dust);
+    }
+    .reviews__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
+      margin-top: var(--space-lg);
+    }
+    .reviews__card {
+      border-top: 1px solid var(--dust);
+      padding-top: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      transition: border-top-color 0.2s ease;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .reviews__card:hover { border-top-color: var(--ember-dark); }
+    }
+    .reviews__stars {
+      color: var(--ember-dark);
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+    }
+    .reviews__quote {
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--stone);
+      color: color-mix(in srgb, var(--slate) 85%, transparent);
+      line-height: 1.7;
+      max-width: 60ch;
+    }
+    .reviews__quote p { margin: 0; }
+    .reviews__quote footer {
+      margin-top: var(--space-xs);
+      font-style: normal;
+    }
+    .reviews__author {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--stone);
+      font-style: normal;
+    }
+    .reviews__all { margin-top: var(--space-lg); }
+    @media (max-width: 768px) {
+      .reviews__grid { grid-template-columns: 1fr; }
+    }
+
+    /* ===== FAQ ===== */
+    .faq {
+      background: var(--parchment);
+      padding: var(--space-section) 0;
+      border-top: 1px solid var(--dust);
+      content-visibility: auto;
+      contain-intrinsic-size: auto 500px;
+    }
+    .faq__list {
+      margin-top: var(--space-lg);
+      border-top: 1px solid var(--dust);
+    }
+    .faq__item { border-bottom: 1px solid var(--dust); }
+    summary.faq__question { list-style: none; }
+    .faq__question {
+      font-family: var(--font-sans);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--slate);
+      padding: var(--space-md) 0;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      gap: var(--space-md);
+    }
+    .faq__question::-webkit-details-marker { display: none; }
+    .faq__question::after {
+      content: '+';
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--ember-dark);
+      transition: transform 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    details[open] .faq__question::after { transform: rotate(45deg); }
+    .faq__answer { padding: 0 0 var(--space-md); }
+    .faq__answer p {
+      font-size: 0.975rem;
+      color: var(--stone);
+      line-height: 1.75;
+      max-width: 70ch;
+    }
+
+    /* ===== COVERAGE ===== */
+    .coverage {
+      background: var(--canvas);
+      padding: var(--space-section) 0;
+      border-top: 1px solid var(--dust);
+      content-visibility: auto;
+      contain-intrinsic-size: auto 400px;
+    }
+    .coverage__intro {
+      font-size: 1.05rem;
+      color: var(--stone);
+      max-width: 60ch;
+      line-height: 1.7;
+      margin-bottom: var(--space-lg);
+    }
+    .coverage__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0 var(--space-md);
+    }
+    .coverage__grid li {
+      font-family: var(--font-sans);
+      font-size: 0.925rem;
+      color: var(--stone);
+      padding: 0.4rem 0;
+      border-bottom: 1px solid var(--dust);
+    }
+    @media (max-width: 600px) {
+      .coverage__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ===== CONTACT FORM ===== */
+    .contact {
+      background: var(--parchment);
+      padding: var(--space-section) 0;
+      border-top: 1px solid var(--dust);
+      content-visibility: auto;
+      contain-intrinsic-size: auto 500px;
+    }
+    .contact__inner {
+      max-width: 640px;
+    }
+    .contact__form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+    .contact__field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.375rem;
+    }
+    .contact__label {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .contact__label abbr {
+      color: var(--ember-dark);
+      text-decoration: none;
+      margin-left: 0.2rem;
+    }
+    .contact__input,
+    .contact__textarea {
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      color: var(--slate);
+      background: var(--canvas);
+      border: 1px solid var(--dust);
+      border-radius: var(--radius-btn);
+      padding: 0.75rem 1rem;
+      width: 100%;
+      transition: border-color 0.2s ease;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .contact__input:focus,
+    .contact__textarea:focus {
+      outline: none;
+      border-color: var(--ember-dark);
+    }
+    .contact__input::placeholder,
+    .contact__textarea::placeholder {
+      color: var(--stone);
+      opacity: 0.6;
+    }
+    .contact__textarea {
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.6;
+    }
+    .contact__intro {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--slate);
+      max-width: 60ch;
+      margin-bottom: var(--space-md);
+    }
+    .contact__note {
+      font-size: 0.8rem;
+      color: var(--stone);
+      margin-top: 0.25rem;
+    }
+    .contact__submit {
+      align-self: flex-start;
+    }
+    @media (max-width: 480px) {
+      .contact__submit { width: 100%; justify-content: center; }
+    }
+    .form-success {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      padding: var(--space-lg) 0;
+    }
+    .form-success__heading {
+      font-family: var(--font-serif);
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      font-weight: 700;
+      color: var(--slate);
+      line-height: 1.2;
+    }
+    .form-success__body {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--stone);
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--parchment);
+      border-top: 1px solid var(--dust);
+    }
+    .footer__inner {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-xl);
+      padding: var(--space-xl) var(--space-md);
+    }
+    .footer__col-heading {
+      font-family: var(--font-sans);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone);
+      margin-bottom: var(--space-sm);
+    }
+    .footer__list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .footer__list li {
+      font-size: 0.9rem;
+      color: var(--stone);
+      line-height: 1.5;
+    }
+    .footer__phone {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--ember-dark);
+      transition: color 0.2s;
+    }
+    .footer__phone:hover { color: var(--ember-deeper); }
+    .footer__link {
+      color: var(--stone);
+      transition: color 0.2s;
+    }
+    .footer__link:hover { color: var(--ember-dark); }
+    .footer__list .footer__address { line-height: 1.6; }
+    .footer__list .footer__emergency {
+      color: var(--ember-dark);
+      font-weight: 600;
+    }
+    .footer__bar {
+      border-top: 1px solid var(--dust);
+      padding: var(--space-md);
+    }
+    .footer__copyright {
+      font-size: 0.8rem;
+      color: var(--stone);
+      text-align: center;
+    }
+    @media (max-width: 768px) {
+      .footer__inner {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+        padding: var(--space-lg) var(--space-md);
+      }
+    }
+
+    /* ===== MOBILE CTA BAR ===== */
+    .mobile-cta-bar { display: none; }
+    @media (max-width: 768px) {
+      .mobile-cta-bar {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        z-index: 90;
+        background: var(--canvas);
+        border-top: 1px solid var(--dust);
+        padding: 0.75rem var(--space-md);
+        gap: var(--space-sm);
+      }
+      body { padding-bottom: 5rem; }
+      .mobile-cta-bar .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+      }
+    }
+
+    /* ===== REDUCED MOTION ===== */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* ===== GLOBAL RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      :root {
+        --space-section: 4rem;
+        --space-xl:      3rem;
+        --space-lg:      2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <nav class="nav" id="nav">
+    <div class="container nav__inner">
+      <a href="#" class="nav__brand">City Plumbing &amp; Heating</a>
+      <div class="nav__actions">
+        <a href="https://wa.me/447700900000" class="nav__whatsapp">WhatsApp</a>
+        <a href="tel:07700900000" class="nav__phone">07700 900000</a>
+        <span class="nav__badge">Gas Safe ✓</span>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+
+    <section class="hero" aria-label="Introduction and contact">
+      <div class="container hero__inner">
+        <div class="hero__content">
+          <p class="section-label">Gas Safe Registered · London</p>
+          <h1 class="hero__headline">Your local plumber, trusted across London</h1>
+          <p class="hero__subhead">Boilers, heating and plumbing: honest work, fair prices, no call-out fee.</p>
+          <div class="hero__ctas">
+            <a href="tel:07700900000" class="btn btn--filled">Call 07700 900000</a>
+            <a href="https://wa.me/447700900000" class="btn btn--outline">WhatsApp Us</a>
+          </div>
+          <p class="hero__hours">Mon–Fri 8am–6pm · Sat 9am–2pm · Emergencies 24/7</p>
+        </div>
+        <div class="hero__image-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=560&q=85"
+            alt="Plumber working on a boiler installation"
+            class="hero__image"
+            width="560"
+            height="640"
+            fetchpriority="high"
+            decoding="async"
+          >
+        </div>
+      </div>
+    </section>
+
+    <section class="trust" aria-label="At a glance">
+      <div class="container">
+        <ul class="trust__grid">
+          <li class="trust__item">
+            <span class="trust__stat">20+</span>
+            <span class="trust__label">Years experience</span>
+          </li>
+          <li class="trust__item">
+            <span class="trust__stat">Gas Safe</span>
+            <span class="trust__label">Registered &amp; insured</span>
+          </li>
+          <li class="trust__item">
+            <span class="trust__stat">5★</span>
+            <span class="trust__label">Google reviews</span>
+          </li>
+          <li class="trust__item">
+            <span class="trust__stat">Same day</span>
+            <span class="trust__label">Emergency response</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="emergency-band">
+      <div class="container">
+        <p class="emergency-band__text">Boiler broken? Call now: <a href="tel:07700900000">07700 900000</a>. Same-day response, 7 days a week.</p>
+      </div>
+    </div>
+
+    <section class="about" aria-labelledby="about-heading">
+      <div class="container about__inner">
+        <div class="about__content">
+          <h2 class="section-heading" id="about-heading">Hi, I'm Mark. I've been fixing London's boilers since 2004</h2>
+          <p class="about__body">I started City Plumbing &amp; Heating because local homeowners deserve a plumber they can actually trust: someone who turns up when they say they will, explains what's wrong without the jargon, and charges a fair price. Twenty years on, that hasn't changed.</p>
+          <p class="about__body">Whether it's an emergency call-out at 7am or a routine annual service, I treat every job like I'm working in my own home. All my engineers are Gas Safe registered and fully insured.</p>
+          <div class="about__creds">
+            <span class="about__cred-chip">Gas Safe Registered · No. 000000</span>
+            <span class="about__cred-chip">CCN1 Core Domestic Gas Safety</span>
+          </div>
+        </div>
+        <div class="about__photo-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=420&q=85"
+            alt="Mark, founder of City Plumbing &amp; Heating"
+            class="about__photo"
+            width="420"
+            height="520"
+            loading="lazy"
+          >
+        </div>
+      </div>
+    </section>
+
+    <section class="services" id="services" aria-labelledby="services-heading">
+      <div class="container">
+        <p class="section-label">What we do</p>
+        <h2 class="section-heading" id="services-heading">Services</h2>
+        <ul class="services__list">
+          <li class="services__row">
+            <span class="services__num">01</span>
+            <div class="services__detail">
+              <strong class="services__name">Boiler Repair</strong>
+              <span class="services__desc">Fault diagnosis and repair on all major brands — Worcester Bosch, Vaillant, Ideal, Baxi and more.</span>
+            </div>
+          </li>
+          <li class="services__row">
+            <span class="services__num">02</span>
+            <div class="services__detail">
+              <strong class="services__name">Boiler Installation</strong>
+              <span class="services__desc">New boiler supply and fit, fully certified. We'll recommend the right size and brand for your home.</span>
+            </div>
+          </li>
+          <li class="services__row">
+            <span class="services__num">03</span>
+            <div class="services__detail">
+              <strong class="services__name">Annual Boiler Service</strong>
+              <span class="services__desc">Keep your warranty valid, your bills down, and your boiler running efficiently all year.</span>
+            </div>
+          </li>
+          <li class="services__row">
+            <span class="services__num">04</span>
+            <div class="services__detail">
+              <strong class="services__name">Emergency Call-Out</strong>
+              <span class="services__desc">Same-day response, 7 days a week. If your boiler breaks down, call us first.</span>
+            </div>
+          </li>
+          <li class="services__row">
+            <span class="services__num">05</span>
+            <div class="services__detail">
+              <strong class="services__name">Central Heating</strong>
+              <span class="services__desc">Full system installs, upgrades and repairs. Radiators, pipework, thermostatic valves and controls.</span>
+            </div>
+          </li>
+          <li class="services__row">
+            <span class="services__num">06</span>
+            <div class="services__detail">
+              <strong class="services__name">Power Flushing</strong>
+              <span class="services__desc">Remove sludge and restore heating efficiency. Recommended when radiators are cold at the bottom.</span>
+            </div>
+          </li>
+          <li class="services__row">
+            <span class="services__num">07</span>
+            <div class="services__detail">
+              <strong class="services__name">Gas Safety Certificates</strong>
+              <span class="services__desc">Landlord certificates and safety inspections. We'll check every gas appliance and issue your CP12.</span>
+            </div>
+          </li>
+          <li class="services__row">
+            <span class="services__num">08</span>
+            <div class="services__detail">
+              <strong class="services__name">Plumbing &amp; Bathroom</strong>
+              <span class="services__desc">Dripping taps, leaks, toilet repairs, bathroom fitting and more. No job too small.</span>
+            </div>
+          </li>
+        </ul>
+        <p class="services__cta-line">Not sure what you need? <a href="tel:07700900000" class="text-link">Call us for a free quote →</a></p>
+      </div>
+    </section>
+
+    <section class="reviews" aria-labelledby="reviews-heading">
+      <div class="container">
+        <h2 class="section-heading" id="reviews-heading">What our customers say</h2>
+        <ul class="reviews__grid">
+          <li class="reviews__card">
+            <span class="reviews__stars" aria-label="5 stars">★★★★★</span>
+            <blockquote class="reviews__quote">
+              <p>"Mark was brilliant: arrived within two hours, diagnosed the fault straight away, and had the boiler working again before lunch. Polite, tidy and very reasonably priced."</p>
+              <footer><cite class="reviews__author">Sarah M.</cite></footer>
+            </blockquote>
+          </li>
+          <li class="reviews__card">
+            <span class="reviews__stars" aria-label="5 stars">★★★★★</span>
+            <blockquote class="reviews__quote">
+              <p>"Our boiler packed in on a freezing Monday morning. City Plumbing were here by 9am. Professional, no-nonsense; they explained exactly what was wrong and didn't try to upsell us anything we didn't need."</p>
+              <footer><cite class="reviews__author">James T.</cite></footer>
+            </blockquote>
+          </li>
+          <li class="reviews__card">
+            <span class="reviews__stars" aria-label="5 stars">★★★★★</span>
+            <blockquote class="reviews__quote">
+              <p>"Used them for a full boiler replacement and they were fantastic start to finish. Fair quote, clean installation, took the old boiler away and left the utility room spotless."</p>
+              <footer><cite class="reviews__author">David K.</cite></footer>
+            </blockquote>
+          </li>
+        </ul>
+        <!-- Replace href below with your Google Maps reviews URL -->
+        <p class="reviews__all"><a href="#" class="text-link">See all our reviews on Google →</a></p>
+      </div>
+    </section>
+
+    <section class="faq" id="faq" aria-labelledby="faq-heading">
+      <div class="container">
+        <p class="section-label">Common questions</p>
+        <h2 class="section-heading" id="faq-heading">FAQ</h2>
+        <div class="faq__list">
+          <details class="faq__item">
+            <summary class="faq__question">How much does a boiler service cost?</summary>
+            <div class="faq__answer">
+              <p>A standard annual boiler service with City Plumbing &amp; Heating costs £85. This covers a full safety inspection, cleaning of key components, a flue gas analysis, and a written report. We'll let you know of any issues found: no surprise extras.</p>
+            </div>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__question">How quickly can you respond to an emergency?</summary>
+            <div class="faq__answer">
+              <p>We aim to reach you the same day, often within a few hours. For genuinely urgent situations (no heating in winter, a gas smell, flooding), call us directly on <a href="tel:07700900000" class="text-link">07700 900000</a> and we'll do everything we can to prioritise your job.</p>
+            </div>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__question">Do you charge a call-out fee?</summary>
+            <div class="faq__answer">
+              <p>No. We don't charge a call-out fee. You pay for the work we do, and we'll always give you a clear price before we start. If a job turns out to be more involved than expected, we'll explain why and agree the additional cost with you first.</p>
+            </div>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__question">Are you Gas Safe registered?</summary>
+            <div class="faq__answer">
+              <p>Yes. All our engineers are Gas Safe registered (licence no. 000000) and fully insured. It's a legal requirement to use a Gas Safe registered engineer for any gas work in the UK. You can verify our registration at <a href="https://www.gassaferegister.co.uk" class="text-link" target="_blank" rel="noopener">gassaferegister.co.uk</a>.</p>
+            </div>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__question">Which boiler brands do you work on?</summary>
+            <div class="faq__answer">
+              <p>We work on all major brands including Worcester Bosch, Vaillant, Ideal, Baxi, Potterton, Glow-worm and Viessmann. If you're not sure whether we cover your boiler, just give us a call and we'll let you know straight away.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="coverage" aria-labelledby="coverage-heading">
+      <div class="container">
+        <h2 class="section-heading" id="coverage-heading">Where we work</h2>
+        <p class="coverage__intro">We cover East and North London. If you're not sure, just <a href="tel:07700900000" class="text-link">call us</a> and we'll let you know.</p>
+        <ul class="coverage__grid">
+          <li>Hackney</li>
+          <li>Islington</li>
+          <li>Stoke Newington</li>
+          <li>Dalston</li>
+          <li>Highbury</li>
+          <li>Canonbury</li>
+          <li>Archway</li>
+          <li>Crouch End</li>
+          <li>Muswell Hill</li>
+          <li>Finsbury Park</li>
+          <li>Holloway</li>
+          <li>Tufnell Park</li>
+          <li>Bethnal Green</li>
+          <li>Bow</li>
+          <li>Mile End</li>
+          <li>Stratford</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="contact" id="contact" aria-labelledby="contact-heading">
+      <div class="container contact__inner">
+        <h2 class="section-heading" id="contact-heading">Get in touch</h2>
+        <p class="contact__intro">Prefer to send a message? Fill in the form and we'll call you back. For urgent jobs, call us directly on <a href="tel:07700900000" class="text-link">07700 900000</a>.</p>
+        <form class="contact__form" action="#" method="post" novalidate>
+          <div class="contact__field">
+            <label class="contact__label" for="contact-name">
+              Name <abbr title="required">*</abbr>
+            </label>
+            <input
+              class="contact__input"
+              type="text"
+              id="contact-name"
+              name="name"
+              autocomplete="name"
+              required
+              maxlength="100"
+              placeholder="Your name"
+              aria-required="true"
+            >
+          </div>
+          <div class="contact__field">
+            <label class="contact__label" for="contact-phone">
+              Phone number <abbr title="required">*</abbr>
+            </label>
+            <input
+              class="contact__input"
+              type="tel"
+              id="contact-phone"
+              name="phone"
+              inputmode="tel"
+              autocomplete="tel"
+              required
+              pattern="[0-9\s\+\-\(\)]{7,15}"
+              title="Please enter a valid UK phone number"
+              placeholder="07700 000000"
+              aria-required="true"
+              aria-describedby="contact-phone-hint"
+            >
+            <p class="contact__note" id="contact-phone-hint">We'll use this to call you back.</p>
+          </div>
+          <div class="contact__field">
+            <label class="contact__label" for="contact-message">
+              Message <abbr title="required">*</abbr>
+            </label>
+            <textarea
+              class="contact__textarea"
+              id="contact-message"
+              name="message"
+              required
+              maxlength="1000"
+              placeholder="Describe the problem or job you need help with"
+              aria-required="true"
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn--filled contact__submit">Send message</button>
+        </form>
+        <div class="form-success" id="form-success" hidden role="alert" aria-live="polite">
+          <p class="form-success__heading" tabindex="-1">Message sent</p>
+          <p class="form-success__body">Thanks, we'll call you back shortly. For urgent jobs, call <a href="tel:07700900000" class="text-link">07700 900000</a>.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__col">
+        <p class="footer__col-heading">City Plumbing &amp; Heating</p>
+        <ul class="footer__list">
+          <li><a href="tel:07700900000" class="footer__phone">07700 900000</a></li>
+          <li><a href="https://wa.me/447700900000" class="footer__link">WhatsApp</a></li>
+          <li><a href="mailto:hello@example.com" class="footer__link">hello@example.com</a></li>
+          <li class="footer__address">12 Example Street<br>London, E1 1AA</li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <p class="footer__col-heading">Opening hours</p>
+        <ul class="footer__list">
+          <li>Monday to Friday: 8am to 6pm</li>
+          <li>Saturday: 9am to 2pm</li>
+          <li>Sunday: Closed</li>
+          <li class="footer__emergency">Emergency call-outs: 24/7</li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <p class="footer__col-heading">Qualifications</p>
+        <ul class="footer__list">
+          <li>Gas Safe Registered · No. 000000</li>
+          <li>CCN1 Core Domestic Gas Safety</li>
+          <li>Fully insured</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bar">
+      <div class="container">
+        <p class="footer__copyright">&copy; <span id="footer-year">2026</span> City Plumbing &amp; Heating. All rights reserved. Template by StealthSMB.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="mobile-cta-bar" role="navigation" aria-label="Quick contact">
+    <a href="tel:07700900000" class="btn btn--filled">Call 07700 900000</a>
+    <a href="https://wa.me/447700900000" class="btn btn--outline">WhatsApp Us</a>
+  </div>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    const form = document.querySelector('.contact__form');
+    const successMsg = document.getElementById('form-success');
+    if (form && successMsg) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const btn = form.querySelector('[type="submit"]');
+        btn.disabled = true;
+        btn.textContent = 'Sending…';
+        setTimeout(() => {
+          form.hidden = true;
+          successMsg.hidden = false;
+          successMsg.querySelector('.form-success__heading').focus();
+        }, 600);
+      });
+    }
+
+    const yearEl = document.getElementById('footer-year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
