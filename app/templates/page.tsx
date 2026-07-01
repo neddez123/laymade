@@ -43,6 +43,7 @@ export default async function TemplatesIndexPage({
       slug: `${v.id}-coming-soon-${idx}`,
       name: `${v.label} Template ${idx + 1}`,
       vertical: v.id,
+      tier: "starter" as const,
       blurb: "Coming Q3 2026. Want early access? Get in touch.",
       heroScreenshot: "",
       liveUrl: null,

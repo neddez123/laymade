@@ -25,10 +25,22 @@ export function FeaturedTemplates() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
-        {items.map((t, i) => (
-          <TemplateCard key={t.slug} template={t} priority={i < 2} />
-        ))}
+      <div
+        className="-mx-6 md:-mx-12 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        style={{ scrollSnapType: "x mandatory" }}
+      >
+        <div className="flex gap-8 px-6 md:px-12 pb-2">
+          {items.map((t, i) => (
+            <div
+              key={t.slug}
+              className="shrink-0 w-[300px] md:w-[400px]"
+              style={{ scrollSnapAlign: "start" }}
+            >
+              <TemplateCard template={t} priority={i < 2} />
+            </div>
+          ))}
+          <div className="shrink-0 w-6 md:w-12" aria-hidden />
+        </div>
       </div>
     </section>
   );

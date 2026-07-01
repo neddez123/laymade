@@ -1,10 +1,12 @@
 export type Vertical = "beauty" | "trades";
 export type TemplateStatus = "live" | "coming-soon";
+export type TemplateTier = "starter" | "standard";
 
 export interface Template {
   slug: string;
   name: string;
   vertical: Vertical;
+  tier: TemplateTier;
   blurb: string;
   heroScreenshot: string;
   liveUrl: string | null;
@@ -22,6 +24,7 @@ export const templates: Template[] = [
     slug: "maison-elite",
     name: "Maison Élite",
     vertical: "beauty",
+    tier: "starter",
     blurb: "Luxury editorial salon site. Black and taupe, Libre Baskerville on Mulish, sharp.",
     heroScreenshot: "/screenshots/maison-elite-hero.jpg",
     liveUrl: "/templates/maison-elite/index.html",
@@ -32,6 +35,7 @@ export const templates: Template[] = [
     slug: "the-bloom-room",
     name: "The Bloom Room",
     vertical: "beauty",
+    tier: "starter",
     blurb: "Warm boutique salon site. Cream and terracotta, Cormorant on DM Sans, rounded.",
     heroScreenshot: "/screenshots/bloom-room-hero.jpg",
     liveUrl: "/templates/bloom-room/index.html",
@@ -42,6 +46,7 @@ export const templates: Template[] = [
     slug: "city-bodyworks",
     name: "City Bodyworks",
     vertical: "trades",
+    tier: "starter",
     blurb: "Dark industrial bodyshop site. Black and red, Space Grotesk, no-nonsense trades.",
     heroScreenshot: "/screenshots/city-bodyworks-hero.jpg",
     liveUrl: "/templates/city-bodyworks/index.html",
@@ -52,6 +57,7 @@ export const templates: Template[] = [
     slug: "local-plumber",
     name: "Local Plumber",
     vertical: "trades",
+    tier: "starter",
     blurb: "Warm local plumbing site. Parchment and amber, Lora serif, Gas Safe trust signals.",
     heroScreenshot: "/screenshots/local-plumber-hero.jpg",
     liveUrl: "/templates/local-plumber/index.html",
@@ -62,6 +68,7 @@ export const templates: Template[] = [
     slug: "the-grove",
     name: "The Grove",
     vertical: "beauty",
+    tier: "standard",
     blurb: "Minimalist premium barbershop. Dark olive, Swiss grid, DM Sans, sharp borders, GSAP animations.",
     heroScreenshot: "/screenshots/the-grove-hero.jpg",
     liveUrl: "https://the-grove-orpin.vercel.app",
