@@ -28,7 +28,7 @@ export function TemplateCard({ template, priority = false }: Props) {
         <div className="relative aspect-[4/3] overflow-hidden bg-[color:var(--paper)] border border-[color:var(--muted)]/30">
           <span className={`absolute top-3 left-3 z-10 text-[9px] uppercase tracking-[0.14em] px-2 py-1 border backdrop-blur-sm ${
             template.tier === "standard"
-              ? "bg-[color:var(--accent)] text-[color:var(--paper)] border-[color:var(--accent)]"
+              ? "bg-[color:var(--ink)] text-[color:var(--paper)] border-[color:var(--ink)]"
               : "bg-[color:var(--paper)]/90 text-[color:var(--ink-soft)] border-[color:var(--muted)]/40"
           }`}>
             {template.tier}
