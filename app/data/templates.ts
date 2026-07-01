@@ -58,6 +58,16 @@ export const templates: Template[] = [
     featured: true,
     status: "live",
   },
+  {
+    slug: "the-grove",
+    name: "The Grove",
+    vertical: "beauty",
+    blurb: "Minimalist premium barbershop. Dark olive, Swiss grid, DM Sans, sharp borders, GSAP animations.",
+    heroScreenshot: "/screenshots/the-grove-hero.jpg",
+    liveUrl: "https://the-grove-orpin.vercel.app",
+    featured: true,
+    status: "live",
+  },
 ];
 
 export const featuredTemplates = (): Template[] =>
