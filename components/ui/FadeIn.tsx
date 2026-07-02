@@ -7,9 +7,20 @@ type Props = {
   className?: string;
   delay?: number;
   y?: number;
+  x?: number;
+  scale?: number;
+  duration?: number;
 };
 
-export function FadeIn({ children, className = "", delay = 0, y = 20 }: Props) {
+export function FadeIn({
+  children,
+  className = "",
+  delay = 0,
+  y = 20,
+  x = 0,
+  scale = 1,
+  duration = 600,
+}: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -35,8 +46,10 @@ export function FadeIn({ children, className = "", delay = 0, y = 20 }: Props) {
       className={className}
       style={{
         opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : `translateY(${y}px)`,
-        transition: `opacity 600ms cubic-bezier(0.23, 1, 0.32, 1) ${delay}ms, transform 600ms cubic-bezier(0.23, 1, 0.32, 1) ${delay}ms`,
+        transform: visible
+          ? "translate(0, 0) scale(1)"
+          : `translate(${x}px, ${y}px) scale(${scale})`,
+        transition: `opacity ${duration}ms cubic-bezier(0.23, 1, 0.32, 1) ${delay}ms, transform ${duration}ms cubic-bezier(0.23, 1, 0.32, 1) ${delay}ms`,
         willChange: visible ? "auto" : "transform, opacity",
       }}
     >

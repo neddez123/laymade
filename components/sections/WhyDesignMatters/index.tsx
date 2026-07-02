@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { FadeIn } from "@/components/ui/FadeIn";
 import img005s from "./0.05s.png";
 import imgClutter from "./clutter.png";
 import imgCredibility from "./credibility.png";
@@ -49,7 +50,7 @@ export function WhyDesignMatters() {
       <div className="mx-auto max-w-[1280px] px-6 md:px-12 py-24 md:py-36">
 
         {/* Section header */}
-        <div className="mb-20 md:mb-28">
+        <FadeIn y={16} className="mb-20 md:mb-28">
           <h2
             className="font-[family-name:var(--font-serif)] text-[color:var(--ink)] leading-tight -tracking-[0.01em] mb-4"
             style={{ fontSize: "var(--fs-section)" }}
@@ -59,7 +60,7 @@ export function WhyDesignMatters() {
           <p className="text-[17px] text-[color:var(--ink-soft)] leading-relaxed">
             Your website is your first impression. Make it count.
           </p>
-        </div>
+        </FadeIn>
 
         {/* Feature rows */}
         <div className="flex flex-col">
@@ -75,41 +76,57 @@ export function WhyDesignMatters() {
             >
               {/* Content — always first in DOM so it stacks above image on mobile */}
               <div className={`flex flex-col gap-5 ${!row.imageRight ? "md:order-last" : ""}`}>
-                <span
-                  className="font-[family-name:var(--font-serif)] italic text-[color:var(--ink)] leading-none -tracking-[0.02em] select-none"
-                  style={{ fontSize: "clamp(4.5rem, 10vw, 8.5rem)" }}
-                >
-                  {row.stat}
-                </span>
+                <FadeIn y={28} scale={0.94} duration={700}>
+                  <span
+                    className="block font-[family-name:var(--font-serif)] italic text-[color:var(--ink)] leading-none -tracking-[0.02em] select-none"
+                    style={{ fontSize: "clamp(4.5rem, 10vw, 8.5rem)" }}
+                  >
+                    {row.stat}
+                  </span>
+                </FadeIn>
 
-                <h3 className="text-[21px] md:text-[25px] font-semibold text-[color:var(--ink)] leading-snug max-w-[44ch]">
-                  {row.headline}
-                </h3>
+                <FadeIn y={18} delay={110}>
+                  <h3 className="text-[21px] md:text-[25px] font-semibold text-[color:var(--ink)] leading-snug max-w-[44ch]">
+                    {row.headline}
+                  </h3>
+                </FadeIn>
 
-                <p className="text-[15px] md:text-[16px] text-[color:var(--ink-soft)] leading-relaxed max-w-[52ch]">
-                  {row.body}
-                </p>
+                <FadeIn y={16} delay={200}>
+                  <p className="text-[15px] md:text-[16px] text-[color:var(--ink-soft)] leading-relaxed max-w-[52ch]">
+                    {row.body}
+                  </p>
+                </FadeIn>
 
-                <Link
-                  href={row.citation.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[11px] text-[color:var(--muted)] underline underline-offset-2 decoration-[color:var(--muted)]/40 hover:text-[color:var(--ink-soft)] hover:decoration-[color:var(--ink-soft)]/50 transition-colors mt-1 leading-relaxed inline-block"
-                >
-                  {row.citation.text}
-                </Link>
+                <FadeIn y={12} delay={290}>
+                  <Link
+                    href={row.citation.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[11px] text-[color:var(--muted)] underline underline-offset-2 decoration-[color:var(--muted)]/40 hover:text-[color:var(--ink-soft)] hover:decoration-[color:var(--ink-soft)]/50 transition-colors mt-1 leading-relaxed inline-block"
+                  >
+                    {row.citation.text}
+                  </Link>
+                </FadeIn>
               </div>
 
               {/* Image */}
               <div className={!row.imageRight ? "md:order-first" : ""}>
-                <div className="relative w-full overflow-hidden rounded-2xl" style={{ aspectRatio: "4/3", minHeight: "280px" }}>
-                  <Image
-                    src={row.image}
-                    alt={row.imageAlt}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
+                <FadeIn
+                  x={row.imageRight ? 32 : -32}
+                  y={0}
+                  scale={1.04}
+                  duration={800}
+                  delay={80}
+                >
+                  <div className="relative w-full overflow-hidden rounded-2xl" style={{ aspectRatio: "4/3", minHeight: "280px" }}>
+                    <Image
+                      src={row.image}
+                      alt={row.imageAlt}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                </FadeIn>
               </div>
             </div>
           ))}

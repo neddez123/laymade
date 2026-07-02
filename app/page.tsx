@@ -16,7 +16,7 @@ export default function HomePage() {
       <main>
         <Hero />
         <FadeIn><FeaturedTemplates /></FadeIn>
-        <FadeIn><WhyDesignMatters /></FadeIn>
+        <WhyDesignMatters />
         <FadeIn><WhyLaymade /></FadeIn>
         <FadeIn><Pricing /></FadeIn>
         <FadeIn><SocialProof /></FadeIn>
