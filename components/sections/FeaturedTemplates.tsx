@@ -117,8 +117,8 @@ export function FeaturedTemplates() {
 
       <div className="relative -mx-6 md:-mx-12">
         {/* Edge fades */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-10 md:w-20 z-10 bg-gradient-to-r from-[color:var(--bg)] to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-10 md:w-20 z-10 bg-gradient-to-l from-[color:var(--bg)] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-4 md:w-6 z-10 bg-gradient-to-r from-[color:var(--bg)] to-transparent opacity-60" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-4 md:w-6 z-10 bg-gradient-to-l from-[color:var(--bg)] to-transparent opacity-60" />
 
         <div
           ref={containerRef}
