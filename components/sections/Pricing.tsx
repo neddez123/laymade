@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/Button";
+import { FadeIn } from "@/components/ui/FadeIn";
 
 const tiers = [
   {
@@ -81,10 +82,10 @@ export function Pricing() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-12">
-        {tiers.map((tier) => (
+        {tiers.map((tier, i) => (
+          <FadeIn key={tier.name} delay={i * 100}>
           <div
-            key={tier.name}
-            className="bg-[color:var(--paper)] border border-[color:var(--muted)]/30 p-8 flex flex-col gap-8"
+            className="bg-[color:var(--paper)] border border-[color:var(--muted)]/30 p-8 flex flex-col gap-8 h-full"
           >
             <div className="flex flex-col gap-2">
               <h3 className="font-[family-name:var(--font-serif)] text-2xl text-[color:var(--ink)]">
@@ -119,6 +120,7 @@ export function Pricing() {
               </ul>
             </div>
           </div>
+          </FadeIn>
         ))}
       </div>
 

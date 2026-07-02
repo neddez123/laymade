@@ -1,6 +1,5 @@
 import { Nav } from "@/components/nav/Nav";
 import { Hero } from "@/components/hero/Hero";
-import { TrustStrip } from "@/components/sections/TrustStrip";
 import { FeaturedTemplates } from "@/components/sections/FeaturedTemplates";
 import { WhyDesignMatters } from "@/components/sections/WhyDesignMatters";
 import { WhyLaymade } from "@/components/sections/WhyLaymade";
@@ -8,6 +7,7 @@ import { Pricing } from "@/components/sections/Pricing";
 import { SocialProof } from "@/components/sections/SocialProof";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/ui/Footer";
+import { FadeIn } from "@/components/ui/FadeIn";
 
 export default function HomePage() {
   return (
@@ -15,13 +15,12 @@ export default function HomePage() {
       <Nav />
       <main>
         <Hero />
-        <TrustStrip />
-        <FeaturedTemplates />
-        <WhyDesignMatters />
-        <WhyLaymade />
-        <Pricing />
-        <SocialProof />
-        <Contact />
+        <FadeIn><FeaturedTemplates /></FadeIn>
+        <FadeIn><WhyDesignMatters /></FadeIn>
+        <FadeIn><WhyLaymade /></FadeIn>
+        <FadeIn><Pricing /></FadeIn>
+        <FadeIn><SocialProof /></FadeIn>
+        <FadeIn><Contact /></FadeIn>
       </main>
       <Footer />
     </>

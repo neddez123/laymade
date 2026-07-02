@@ -24,7 +24,7 @@ export function Button(props: Props) {
   const { variant = "primary", children, className = "" } = props;
 
   const base =
-    "inline-flex items-center gap-2 px-5 py-3 text-[12px] tracking-[0.08em] uppercase font-medium transition-colors duration-200 border";
+    "inline-flex items-center gap-2 px-5 py-3 text-[12px] tracking-[0.08em] uppercase font-medium btn-press border";
   const variants = {
     primary:
       "bg-[color:var(--ink)] text-[color:var(--bg)] border-[color:var(--ink)] hover:bg-[color:var(--accent)] hover:border-[color:var(--accent)]",

@@ -40,10 +40,11 @@ export function NavDropdown({ vertical, label, status }: Props) {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
+            initial={{ opacity: 0, y: -4, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -4, scale: 0.97 }}
             transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+            style={{ transformOrigin: "top center" }}
             className="absolute left-1/2 top-full -translate-x-1/2 pt-3 z-50"
           >
             <div className="bg-[color:var(--paper)] border border-[color:var(--muted)]/40 min-w-[280px] p-3 shadow-[0_4px_24px_rgba(22,22,22,0.06)]">

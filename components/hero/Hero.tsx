@@ -1,5 +1,5 @@
 import { HeroPreviewCard } from "./HeroPreviewCard";
-import { Button } from "@/components/ui/Button";
+import { HeroText } from "./HeroText";
 
 export function Hero() {
   return (
@@ -9,27 +9,7 @@ export function Hero() {
 
       {/* Text — constrained to max-width, with its own padding */}
       <div className="relative z-10 pointer-events-none mx-auto max-w-[1280px] px-6 md:px-12 pt-16 md:pt-28 pb-12 md:pb-32">
-        <div className="pointer-events-auto md:w-5/12 flex flex-col gap-8 md:gap-10">
-          <h1
-            className="font-[family-name:var(--font-serif)] text-[color:var(--ink)] leading-[0.95] -tracking-[0.02em]"
-            style={{ fontSize: "var(--fs-hero)" }}
-          >
-            Premium websites for independent businesses.
-          </h1>
-
-          <p className="text-lg md:text-xl text-[color:var(--ink-soft)] max-w-[34ch] leading-relaxed">
-            Built fast, and yours from day one.
-          </p>
-
-          <div className="flex flex-wrap items-center gap-4">
-            <Button href="#templates" variant="primary">
-              View templates
-            </Button>
-            <Button href="#contact" variant="ghost">
-              Talk to Ben
-            </Button>
-          </div>
-        </div>
+        <HeroText />
       </div>
 
       {/* 3D orbit — desktop: absolute from section top, right 60% of viewport.

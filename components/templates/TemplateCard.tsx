@@ -21,11 +21,11 @@ export function TemplateCard({ template, priority = false }: Props) {
       tabIndex={isComingSoon ? -1 : undefined}
     >
       <motion.article
-        whileHover={isComingSoon ? undefined : { y: -3 }}
-        transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+        whileHover={isComingSoon ? undefined : { y: -5, scale: 1.015 }}
+        transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
         className={`flex flex-col gap-5 ${isComingSoon ? "opacity-55" : ""}`}
       >
-        <div className="relative aspect-[4/3] overflow-hidden bg-[color:var(--paper)] border border-[color:var(--muted)]/30">
+        <div data-image-container className="relative aspect-[4/3] overflow-hidden bg-[color:var(--paper)] border border-[color:var(--muted)]/30">
           <span className={`absolute top-3 left-3 z-10 text-[9px] uppercase tracking-[0.14em] px-2 py-1 border backdrop-blur-sm ${
             template.tier === "standard"
               ? "bg-[color:var(--ink)] text-[color:var(--paper)] border-[color:var(--ink)]"
@@ -46,8 +46,10 @@ export function TemplateCard({ template, priority = false }: Props) {
               alt={`${template.name} hero preview`}
               fill
               priority={priority}
+              draggable={false}
               sizes="(max-width: 768px) 300px, 400px"
-              className="object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.015]"
+              className="object-cover object-top scale-[1.1]"
+              data-parallax
             />
           )}
         </div>

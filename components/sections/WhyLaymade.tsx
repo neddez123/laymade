@@ -1,3 +1,5 @@
+import { FadeIn } from "@/components/ui/FadeIn";
+
 const items = [
   {
     numeral: "01",
@@ -28,18 +30,20 @@ export function WhyLaymade() {
       </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-14">
-        {items.map((item) => (
-          <div key={item.numeral} className="flex flex-col gap-5">
-            <span className="font-[family-name:var(--font-serif)] text-[80px] leading-none text-[color:var(--muted)]/80">
-              {item.numeral}
-            </span>
-            <h3 className="text-[22px] font-medium text-[color:var(--ink)] leading-tight">
-              {item.title}
-            </h3>
-            <p className="text-[15px] text-[color:var(--ink-soft)] leading-relaxed">
-              {item.body}
-            </p>
-          </div>
+        {items.map((item, i) => (
+          <FadeIn key={item.numeral} delay={i * 80}>
+            <div className="flex flex-col gap-5">
+              <span className="font-[family-name:var(--font-serif)] text-[80px] leading-none text-[color:var(--muted)]/80">
+                {item.numeral}
+              </span>
+              <h3 className="text-[22px] font-medium text-[color:var(--ink)] leading-tight">
+                {item.title}
+              </h3>
+              <p className="text-[15px] text-[color:var(--ink-soft)] leading-relaxed">
+                {item.body}
+              </p>
+            </div>
+          </FadeIn>
         ))}
       </div>
     </section>
