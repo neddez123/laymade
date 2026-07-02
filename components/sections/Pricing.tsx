@@ -85,7 +85,7 @@ export function Pricing() {
         {tiers.map((tier, i) => (
           <FadeIn key={tier.name} delay={i * 100}>
           <div
-            className="bg-[color:var(--paper)] border border-[color:var(--muted)]/30 p-8 flex flex-col gap-8 h-full"
+            className="bg-[color:var(--paper)] border border-[color:var(--muted)]/30 p-8 flex flex-col gap-8 h-full transition-[transform,border-color] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-1.5 hover:border-[color:var(--accent)]/60"
           >
             <div className="flex flex-col gap-2">
               <h3 className="font-[family-name:var(--font-serif)] text-2xl text-[color:var(--ink)]">
